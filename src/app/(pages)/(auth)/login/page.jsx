@@ -15,11 +15,11 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="py-30 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+    <div className="py-30 bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl grid md:grid-cols-2 gap-0 bg-white rounded-3xl shadow-2xl overflow-hidden">
         
         {/* Left Side - Artwork Display */}
-        <div className="relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8 flex flex-col justify-between min-h-[600px]">
+        <div className="relative bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-8 flex flex-col justify-between min-h-[600px]">
           <div className="flex justify-between items-start">
             <h2 className="text-white font-semibold text-lg">Selected Works</h2>
             <div className="flex gap-3">

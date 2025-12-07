@@ -540,7 +540,7 @@ function PhotoFrameEditorContent() {
               <div className="mt-6 bg-white rounded-lg shadow-sm p-4">
                 <button
                   onClick={() => setShowSizeComparison(!showSizeComparison)}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition font-semibold"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-linear-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition font-semibold"
                 >
                   <Eye size={20} />
                   {showSizeComparison ? 'Hide Size Comparison' : 'Compare All Sizes'}
