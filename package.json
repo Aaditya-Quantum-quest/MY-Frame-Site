@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.9",
     "axios": "^1.13.2",
+    "clsx": "^2.1.1",
     "fabric": "^6.9.0",
     "konva": "^10.0.12",
     "lucide-react": "^0.555.0",
@@ -19,6 +20,7 @@
     "react-dom": "19.2.0",
     "react-easy-crop": "^5.5.6",
     "react-konva": "^19.2.1",
+    "tailwind-merge": "^3.4.0",
     "zustand": "^5.0.9"
   },
   "devDependencies": {

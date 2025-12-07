@@ -84,7 +84,7 @@ export default function Hero() {
               {/* Grid Layout with Enhanced Styling */}
               <div className="grid grid-cols-3 gap-4 lg:gap-5">
                 {gridHeroVideos.map((video, index) => (
-                  <Link href={video.linkToPage} key={index}>
+                  <div href={video.linkToPage} key={index}>
                     <div
 
                       className={`aspect-square rounded-3xl overflow-hidden shadow-xl transform transition-all duration-700 ease-out ${activeGrid === index
@@ -103,7 +103,7 @@ export default function Hero() {
                       </video>
                     </div>
 
-                  </Link>
+                  </div>
                 ))}
               </div>
 

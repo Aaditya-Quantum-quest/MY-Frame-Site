@@ -32,14 +32,14 @@ const ShowCase = () => {
         },
         {
             id: 3,
-            tag: 'PREMIUM CHOICE',
-            title: 'Acrylic Wall Clock',
-            subtitle: 'Museum Quality.',
-            price: 'From ₹279.00',
-            video: 'acrylic-wall-clock.mp4',
-            bgColor: 'bg-slate-100',
-            textColor: 'text-slate-900',
-            LinkToPage: "/products/acrylic-wall-clock"
+            tag: 'DESK ESSENTIAL',
+            title: 'Acrylic Desk Photo',
+            subtitle: 'Perfect for tables & workspaces.',
+            price: 'From ₹239',
+            video: 'acrylic-desk-photo.mp4',
+            bgColor: 'bg-blue-50',
+            textColor: 'text-blue-900',
+            LinkToPage: "/products/acrylic-desk-photo",
         },
 
 
@@ -55,7 +55,7 @@ const ShowCase = () => {
 
 
         <Fragment>
-            <div className="bg-linear-to-br from-gray-50 to-gray-100 p-8 pt-20">
+            <div className="bg-white p-8 pt-20">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16 lg:mb-20 space-y-6">
                         {/* Badge */}

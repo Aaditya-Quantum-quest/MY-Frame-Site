@@ -126,17 +126,6 @@ const ShowCase = () => {
             LinkToPage: "/products/collage-acrylic-photo",
         },
         {
-            id: 12,
-            tag: 'FRAME + ACRYLIC STYLE',
-            title: 'Framed Acrylic Photo',
-            subtitle: 'Acrylic clarity with classic framing.',
-            price: 'From ₹599',
-            video: 'framed-acrylic-photo.mp4',
-            bgColor: 'bg-teal-50',
-            textColor: 'text-teal-900',
-            LinkToPage: "/products/framed-acrylic-photo",
-        },
-        {
             id: 13,
             tag: 'MINI GALLERY SET',
             title: 'Mini Photo Gallery',

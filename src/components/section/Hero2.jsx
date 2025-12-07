@@ -13,12 +13,12 @@ const Hero2 = (props) => {
   }
 
   const handleAllCategoriesNavigate = () => {
-    router.push('/products/all-categories')
+    router.push('/e')
   }
 
   return (
     <>
-      <section className="relative min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50 overflow-hidden py-10">
+      <section className="relative bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50 overflow-hidden py-10">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -26,7 +26,7 @@ const Hero2 = (props) => {
           <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 ">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
 
             {/* Left Side - Text Content */}
@@ -57,17 +57,17 @@ const Hero2 = (props) => {
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 flex-col">
                 <button
                   className="group relative px-6 sm:px-8 cursor-pointer py-3 sm:py-4 bg-linear-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95"
                   onClick={handleAllCategoriesNavigate}
                 >
-                  <span className="relative z-10">Explore Collection</span>
+                  <span className="relative z-10 uppercase text-md">Starts Creating Your Own Custom Frame</span>
                   <div className="absolute inset-0 bg-linear-to-r from-purple-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
 
                 <button
-                  className="group px-6 sm:px-8 py-3 sm:py-4 cursor-pointer bg-white/80 backdrop-blur-sm text-slate-700 font-semibold rounded-full border-2 border-slate-200 hover:border-indigo-300 hover:bg-white transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-2"
+                  className="group px-6 sm:px-8 py-3  sm:py-4 cursor-pointer bg-white/80 backdrop-blur-sm text-slate-700 font-semibold rounded-full border-2 border-slate-200 hover:border-indigo-300 hover:bg-white transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
                   onClick={handleGalleryNavigate}
                 >
                   <span>View Gallery</span>
