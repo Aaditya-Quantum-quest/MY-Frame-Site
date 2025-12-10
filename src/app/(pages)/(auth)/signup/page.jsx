@@ -1,6 +1,10 @@
+
+
 'use client';
 
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { User, Lock, Mail, ArrowRight } from 'lucide-react';
 
 export default function ModernSignup() {
@@ -9,23 +13,87 @@ export default function ModernSignup() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+
+  const router = useRouter();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    if (password !== confirmPassword) {
+      setErrorMsg('Passwords do not match');
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await axios.post('http://localhost:4000/api/auth/signup', {
+        name: fullName,
+        email,
+        username,
+        password,
+      });
+
+      // store token if backend sends it
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+      }
+
+      setSuccessMsg(res.data.message || 'Signup successful');
+
+      // optional: clear fields
+      setFullName('');
+      setEmail('');
+      setUsername('');
+      setPassword('');
+      setConfirmPassword('');
+
+      // redirect to home
+      setTimeout(() => {
+        router.push('/');
+      }, 800);
+    } catch (err) {
+      const msg =
+        err.response?.data?.message ||
+        err.message ||
+        'Signup failed. Please try again.';
+      setErrorMsg(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-pink-400 via-pink-500 to-purple-600 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="py-20 bg-linear-to-br from-pink-400 via-pink-500 to-purple-600 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Decorative Blobs */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-linear-to-br from-pink-300 to-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-      <div className="absolute top-0 right-0 w-72 h-72 bg-linear-to-br from-purple-300 to-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-0 left-20 w-80 h-80 bg-linear-to-br from-orange-300 to-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-      
+      {/* ...your existing blob divs here... */}
+
       {/* Sign Up Card */}
       <div className="relative bg-white rounded-3xl shadow-2xl p-8 sm:p-12 w-full max-w-md">
         {/* Decorative Corner Blob */}
-        <div className="absolute -top-10 -left-10 w-32 h-32 bg-linear-to-br from-purple-400 to-pink-400 rounded-full opacity-50"></div>
-        
+        {/* ... */}
+
         <div className="relative z-10">
-          <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">Create Account</h2>
-          
-          <div className="space-y-4">
+          <h2 className="text-3xl font-medium text-gray-800 text-center mb-4">
+            Create Account
+          </h2>
+
+          {/* Messages */}
+          {errorMsg && (
+            <p className="mb-3 text-sm text-red-500 text-center">{errorMsg}</p>
+          )}
+          {successMsg && (
+            <p className="mb-3 text-sm text-green-600 text-center">
+              {successMsg}
+            </p>
+          )}
+
+          <form onSubmit={handleSignup} className="space-y-4">
             {/* Full Name Input */}
             <div className="relative">
               <div className="absolute left-4 top-1/2 -translate-y-1/2">
@@ -37,6 +105,7 @@ export default function ModernSignup() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 bg-gray-100 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+                required
               />
             </div>
 
@@ -51,6 +120,7 @@ export default function ModernSignup() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 bg-gray-100 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+                required
               />
             </div>
 
@@ -79,6 +149,7 @@ export default function ModernSignup() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 bg-gray-100 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+                required
               />
             </div>
 
@@ -93,26 +164,33 @@ export default function ModernSignup() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 bg-gray-100 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+                required
               />
             </div>
 
             {/* Sign Up Button */}
-            <button className="w-full py-3 cursor-pointer bg-linear-to-r from-orange-400 via-pink-500 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
-              SIGN UP
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 cursor-pointer bg-linear-to-r from-orange-400 via-pink-500 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Signing up...' : 'SIGN UP'}
             </button>
 
             {/* Terms Text */}
             <p className="text-xs text-gray-500 text-center">
               By signing up, you agree to our{' '}
-              <button className="text-pink-500 hover:underline">Terms</button>
-              {' '}and{' '}
-              <button className="text-pink-500 hover:underline">Privacy Policy</button>
+              <button className="text-pink-500 hover:underline">Terms</button>{' '}
+              and{' '}
+              <button className="text-pink-500 hover:underline">
+                Privacy Policy
+              </button>
             </p>
-          </div>
+          </form>
 
           {/* Already Have Account Link */}
           <div className="mt-8 text-center">
-            <button className="text-gray-500 hover:text-pink-500 transition inline-flex items-center gap-1 group">
+            <button className="text-pink-500  hover:text-pink-700 cursor-pointer transition inline-flex items-center gap-1 group">
               Already have an account? Login
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
