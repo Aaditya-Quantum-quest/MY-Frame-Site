@@ -152,27 +152,30 @@
 
 
 
-
-
-
-
-
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { Trash2, Users, Mail, Calendar, UserCircle, Shield, AlertCircle } from 'lucide-react';
+import {
+  Trash2,
+  Users,
+  Mail,
+  Calendar,
+  UserCircle,
+  Shield,
+  AlertCircle,
+} from 'lucide-react';
 
 export default function CustomersAdminPage() {
   const router = useRouter();
+
   const [checking, setChecking] = useState(true);
   const [users, setUsers] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
-  const [currentIsAdmin, setcurrentIsAdmin] = useState(false);
+  const [currentIsAdmin, setCurrentIsAdmin] = useState(false);
 
-  // protect route: admin only
+  // Protect route: admin only, and set currentIsAdmin
   useEffect(() => {
     const token = localStorage.getItem('token');
     const isAdmin = localStorage.getItem('isAdmin') === 'true';
@@ -185,10 +188,12 @@ export default function CustomersAdminPage() {
       router.replace('/');
       return;
     }
+
+    setCurrentIsAdmin(isAdmin);
     setChecking(false);
   }, [router]);
 
-  // load users
+  // Load users list
   useEffect(() => {
     if (checking) return;
     const token = localStorage.getItem('token');
@@ -197,7 +202,15 @@ export default function CustomersAdminPage() {
       .get('http://localhost:4000/api/admin/users', {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => setUsers(res.data))
+      // .then((res) => setUsers(res.data))
+      .then((res) => {
+        const normalized = res.data.map((u) => ({
+          ...u,
+          // force to real boolean (handles true/false, "true"/"false", 1/0)
+          isAdmin: !!u.isAdmin,
+        }));
+        setUsers(normalized); 
+      })
       .catch((err) => {
         const msg =
           err.response?.data?.message ||
@@ -205,8 +218,6 @@ export default function CustomersAdminPage() {
           'Failed to load users';
         setErrorMsg(msg);
       });
-
-
   }, [checking]);
 
   const handleDelete = async (id) => {
@@ -215,7 +226,7 @@ export default function CustomersAdminPage() {
     try {
       const token = localStorage.getItem('token');
       await axios.delete(`http://localhost:4000/api/admin/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setUsers((prev) => prev.filter((user) => user._id !== id));
     } catch (error) {
@@ -225,23 +236,27 @@ export default function CustomersAdminPage() {
     }
   };
 
-  // Calculate stats
+  // Calculate stats from users array
   const totalCustomers = users.length;
-  const adminCount = users.filter(u => u.isAdmin).length;
+  const adminCount = users.filter((u) => u.isAdmin).length;
   const regularCustomers = totalCustomers - adminCount;
-  const recentCustomers = users.filter(u => {
+  const recentCustomers = users.filter((u) => {
     const createdDate = new Date(u.createdAt);
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     return createdDate >= thirtyDaysAgo;
   }).length;
 
+  const visibleUsers = users;
+
   if (checking) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-900 via-purple-900 to-slate-900">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
-          <p className="text-purple-200 mt-4 font-medium">Checking permissions...</p>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent" />
+          <p className="text-purple-200 mt-4 font-medium">
+            Checking permissions...
+          </p>
         </div>
       </main>
     );
@@ -254,9 +269,13 @@ export default function CustomersAdminPage() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-3">
             <Users className="w-10 h-10 text-purple-400" />
-            Customer Management
+            {currentIsAdmin ? 'Admin Management' : 'Customer Management'}
           </h1>
-          <p className="text-purple-300">View and manage your customer base</p>
+          <p className="text-purple-300">
+            {currentIsAdmin
+              ? 'View and manage all admin accounts'
+              : 'View and manage your customer base'}
+          </p>
         </div>
 
         {errorMsg && (
@@ -268,38 +287,53 @@ export default function CustomersAdminPage() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* Card 1: total */}
           <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 hover:border-purple-500/50 transition-all duration-300">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
                 <Users className="w-6 h-6 text-white" />
               </div>
               <div>
-                <p className="text-purple-300 text-xs uppercase tracking-wider font-semibold">{currentIsAdmin ? 'Total Admin' : 'Total Customers'}</p>
-                <p className="text-2xl font-bold text-white">{currentIsAdmin ? 'AdminCount' : 'RegularCustomers'}</p>
+                <p className="text-purple-300 text-xs uppercase tracking-wider font-semibold">
+                  {currentIsAdmin ? 'Total Admins' : 'Total Customers'}
+                </p>
+                <p className="text-2xl font-bold text-white">
+                  {currentIsAdmin ? adminCount : regularCustomers}
+                </p>
               </div>
             </div>
           </div>
 
+          {/* Card 2: recent customers */}
           <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 hover:border-purple-500/50 transition-all duration-300">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-linear-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
                 <Calendar className="w-6 h-6 text-white" />
               </div>
               <div>
-                <p className="text-purple-300 text-xs uppercase tracking-wider font-semibold">New (30 days)</p>
-                <p className="text-2xl font-bold text-white">{recentCustomers}</p>
+                <p className="text-purple-300 text-xs uppercase tracking-wider font-semibold">
+                  New (30 days)
+                </p>
+                <p className="text-2xl font-bold text-white">
+                  {recentCustomers}
+                </p>
               </div>
             </div>
           </div>
 
+          {/* Card 3: admin count */}
           <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 hover:border-purple-500/50 transition-all duration-300">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-linear-to-br from-amber-500 to-orange-500 flex items-center justify-center">
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <div>
-                <p className="text-purple-300 text-xs uppercase tracking-wider font-semibold">Admins</p>
-                <p className="text-2xl font-bold text-white">{adminCount}</p>
+                <p className="text-purple-300 text-xs uppercase tracking-wider font-semibold">
+                  Admins
+                </p>
+                <p className="text-2xl font-bold text-white">
+                  {adminCount}
+                </p>
               </div>
             </div>
           </div>
@@ -310,9 +344,9 @@ export default function CustomersAdminPage() {
           <div className="px-8 py-6 border-b border-white/10">
             <h2 className="text-2xl font-semibold text-white flex items-center gap-3">
               <Users className="w-6 h-6 text-purple-400" />
-              {currentIsAdmin ? 'Admin Management' : 'Customer Management'}
+              {currentIsAdmin ? 'All Admins & Customers' : 'All Customers'}
               <span className="px-3 py-1 bg-purple-500/20 text-purple-300 text-sm font-medium rounded-full">
-                {users.length}
+                {visibleUsers.length}
               </span>
             </h2>
           </div>
@@ -339,8 +373,11 @@ export default function CustomersAdminPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {users.map((u, index) => (
-                  <tr key={u._id} className="hover:bg-white/5 transition-colors group">
+                {visibleUsers.map((u) => (
+                  <tr
+                    key={u._id}
+                    className="hover:bg-white/5 transition-colors group"
+                  >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
@@ -384,11 +421,16 @@ export default function CustomersAdminPage() {
                     <td className="px-6 py-4 hidden lg:table-cell">
                       <div className="flex items-center gap-2 text-purple-400 text-sm">
                         <Calendar className="w-4 h-4" />
-                        {u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-IN', {
-                          day: '2-digit',
-                          month: 'short',
-                          year: 'numeric'
-                        }) : 'N/A'}
+                        {u.createdAt
+                          ? new Date(u.createdAt).toLocaleDateString(
+                            'en-IN',
+                            {
+                              day: '2-digit',
+                              month: 'short',
+                              year: 'numeric',
+                            }
+                          )
+                          : 'N/A'}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -406,11 +448,15 @@ export default function CustomersAdminPage() {
             </table>
           </div>
 
-          {users.length === 0 && !errorMsg && (
+          {visibleUsers.length === 0 && !errorMsg && (
             <div className="text-center py-16">
               <Users className="w-20 h-20 text-purple-400/50 mx-auto mb-4" />
-              <p className="text-xl text-purple-300 mb-2">No customers yet</p>
-              <p className="text-sm text-purple-400">Customer accounts will appear here once they register</p>
+              <p className="text-xl text-purple-300 mb-2">
+                No customers yet
+              </p>
+              <p className="text-sm text-purple-400">
+                Customer accounts will appear here once they register
+              </p>
             </div>
           )}
         </div>
