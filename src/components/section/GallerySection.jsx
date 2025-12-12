@@ -71,7 +71,7 @@ const WeddingGallery = () => {
           {images.map((image) => (
             <div
               key={image.id}
-              className="relative group cursor-pointer overflow-hidden rounded-tl-4xl rounded-br-4xl shadow-lg transition-transform duration-300 hover:scale-105"
+              className="relative group cursor-pointer overflow-hidden rounded-tl-4xl rounded-tr-4xl rounded-br-4xl shadow-lg transition-transform duration-300 hover:scale-105"
               onClick={() => openLightbox(image)}
             >
               <div className="aspect-square">

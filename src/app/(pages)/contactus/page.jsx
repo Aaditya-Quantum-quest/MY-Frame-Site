@@ -159,7 +159,7 @@ const ContactUs = () => {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your name"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl border text-black border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
                       required
                     />
                   </div>
@@ -174,7 +174,7 @@ const ContactUs = () => {
                       value={formData.surname}
                       onChange={handleChange}
                       placeholder="Your surname"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl border text-black border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
                       required
                     />
                   </div>
@@ -192,7 +192,7 @@ const ContactUs = () => {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Your email"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl text-black border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
                       required
                     />
                   </div>
@@ -207,7 +207,7 @@ const ContactUs = () => {
                       value={formData.subject}
                       onChange={handleChange}
                       placeholder="Subject"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl border text-black border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
                       required
                     />
                   </div>
@@ -224,7 +224,7 @@ const ContactUs = () => {
                     onChange={handleChange}
                     placeholder="Write your message here..."
                     rows="5"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300 resize-none"
+                    className="w-full px-4 py-3 rounded-xl border text-black border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300 resize-none"
                     required
                   ></textarea>
                 </div>

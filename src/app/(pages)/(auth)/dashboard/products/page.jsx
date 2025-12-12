@@ -629,15 +629,31 @@ export default function ProductsAdminPage() {
                 <Tag className="w-4 h-4" />
                 Category
               </label>
-              <input
-                type="text"
+
+              <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-purple-400/50 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                placeholder="Wooden Frames"
                 required
-              />
+                className="w-full px-4 py-3 bg-transmarent border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all appearance-none"
+              >
+                <option value="Acrylic Photo" className='bg-black'>Acrylic Photo</option>
+                <option value="Framed Acrylic Photo" className='bg-black'>Framed Acrylic Photo</option>
+                <option value="Acrylic Cutout" className='bg-black'>Acrylic Cutout</option>
+                <option value="Aluminium Framed Acrylic Photo" className='bg-black'>
+                  Aluminium Framed Acrylic Photo
+                </option>
+                <option value="Miniphoto Gallery" className='bg-black'>Miniphoto Gallery</option>
+                <option value="Clear Acrylic Photo" className='bg-black'>Clear Acrylic Photo</option>
+                <option value="Collage Acrylic Photo" className='bg-black'>Collage Acrylic Photo</option>
+                <option value="Acrylic Desk Photo" className='bg-black'>Acrylic Desk Photo</option>
+                <option value="Acrylic Nameplate" className='bg-black'>Acrylic Nameplate</option>
+                <option value="Acrylic Wall Clock" className='bg-black'>Acrylic Wall Clock</option>
+                <option value="Acrylic Fridge Magnets" className='bg-black'>Acrylic Fridge Magnets</option>
+                <option value="Acrylic KeyChains" className='bg-black'>Acrylic KeyChains</option>
+                <option value="Acrylic Monogram" className='bg-black'>Acrylic Monogram</option>
+              </select>
             </div>
+
 
             {/* Image URL */}
             <div className="md:col-span-2">
@@ -684,7 +700,7 @@ export default function ProductsAdminPage() {
             <div className="md:col-span-2 flex gap-4">
               <button
                 onClick={handleAddProduct}
-                className="flex-1 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-purple-500/30 hover:scale-[1.02]"
+                className="flex-1 cursor-pointer bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-purple-500/30 hover:scale-[1.02]"
               >
                 {editingId ? (
                   <>
@@ -705,7 +721,7 @@ export default function ProductsAdminPage() {
                     setTitle(''); setSlug(''); setPrice(''); setImageUrl('');
                     setCategory(''); setDescription('');
                   }}
-                  className="px-6 py-3 bg-white/5 border border-white/10 text-purple-300 font-medium rounded-xl hover:bg-white/10 transition-all"
+                  className="px-6 py-3 cursor-pointer bg-white/5 border border-white/10 text-purple-300 font-medium rounded-xl hover:bg-white/10 transition-all"
                 >
                   Cancel
                 </button>
@@ -752,13 +768,20 @@ export default function ProductsAdminPage() {
                   <tr key={product._id} className="hover:bg-white/5 transition-colors group">
                     <td className="px-8 py-4">
                       <div className="relative">
-                        <img
-                          src={product.imageUrl}
-                          alt={product.title}
-                          className="w-16 h-16 object-cover rounded-xl border border-white/20 group-hover:scale-110 transition-transform duration-300"
-                        />
+                        {product.imageUrl ? (
+                          <img
+                            src={product.imageUrl}
+                            alt={product.title}
+                            className="w-16 h-16 object-cover rounded-xl border border-white/20 group-hover:scale-110 transition-transform"
+                          />
+                        ) : (
+                          <div className="w-16 h-16 rounded-xl border border-dashed border-white/20 flex items-center justify-center text-xs text-purple-300/70">
+                            No image
+                          </div>
+                        )}
                       </div>
                     </td>
+
                     <td className="px-6 py-4">
                       <div className="font-medium text-white text-lg">
                         {product.title}

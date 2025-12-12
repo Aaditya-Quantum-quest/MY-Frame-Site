@@ -54,6 +54,10 @@ export default function Header() {
     router.replace('/login');
   };
 
+  const handleContactNavigation = () =>{
+    router.push('/contactus');
+  }
+
   const productCategories = [
     {
       title: 'ALL FRAMES',
@@ -78,7 +82,7 @@ export default function Header() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-110 transition-all duration-300 ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-md shadow-lg'
             : 'bg-white shadow-md'
@@ -189,7 +193,7 @@ export default function Header() {
                             Need help finding something?
                           </p>
                         </div>
-                        <button className="px-6 py-2.5 bg-linear-to-r from-orange-600 to-orange-500 text-white text-sm font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 hover:from-orange-700 hover:to-orange-600">
+                        <button className="px-6 py-2.5 bg-linear-to-r from-orange-600 to-orange-500 text-white text-sm font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 hover:from-orange-700 hover:to-orange-600 cursor-pointer" onClick={handleContactNavigation}>
                           Contact Support
                         </button>
                       </div>

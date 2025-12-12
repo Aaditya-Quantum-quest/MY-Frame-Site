@@ -1,30 +1,28 @@
-'use client';
+"use client";
 
-import React, { Fragment, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { Fragment, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-import GallerySection from '@/components/section/GallerySection';
-import Hero from '@/components/section/Hero';
-import ShowCase from '@/components/section/ShowCase';
-import HeadingTitle from '@/components/ui/HeadingTitle';
-import ProductPage from '@/components/section/Products';
+import GallerySection from "@/components/section/GallerySection";
+import Hero from "@/components/section/Hero";
+import ShowCase from "@/components/section/ShowCase";
+import HeadingTitle from "@/components/ui/HeadingTitle";
+import ProductPage from "@/components/section/Products";
 
-const Home = () => {
+const HomeClient = () => {
   const router = useRouter();
   const [checking, setChecking] = useState(true);
 
   // useEffect(() => {
-  //   const token = typeof window !== 'undefined'
-  //     ? localStorage.getItem('token')
-  //     : null;
+  //   const token =
+  //     typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   //   if (!token) {
-  //     router.replace('/signup'); // redirect if not logged in
+  //     router.replace("/signup");
   //   } else {
-  //     setChecking(false);        // token exists → show home
+  //     setChecking(false);
   //   }
   // }, [router]);
-
 
   // if (checking) {
   //   return (
@@ -45,4 +43,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeClient;
